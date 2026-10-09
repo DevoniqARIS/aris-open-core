@@ -1,16 +1,16 @@
-# Devoniq ARIS Open Core
+# Devoniq ARIS Open Core v0.2
 
 **ARIS is an open mission-intelligence layer for drone autonomy research.**
 
-Give ARIS a high-level objective, translate it into a structured Mission IR, validate
-it against deterministic safety rules, and execute it in a generic 3D simulation.
+When given a high-level objective, ARIS translates it into a structured Mission IR, validates
+it against deterministic safety rules, and executes it in a generic 3D simulation.
 
 Example objective:
 
 > Take off to 12 m. Find the nearest building. Fly to it while avoiding obstacles.
 > Circle the building, return home, and land.
 
-The public core is designed to make the architecture inspectable and hackable.
+The public core version is designed to make the architecture inspectable and hackable.
 
 **v0.2 adds a direct PX4/MAVSDK adapter**, so developers can connect ARIS to PX4/MAVLink systems without a phone app or proprietary bridge.
 
@@ -24,15 +24,15 @@ Simulation Lab.
 - A research/developer project.
 - A generic rigid-body Bullet simulation.
 - A hardware-agnostic adapter architecture.
-- An Apache-2.0 licensed community core.
+- An **Apache-2.0 licensed** community core.
 
 ## What this is not
 
-- Not a claim of real-aircraft validation.
+- Not a claim of real-aircraft validation. That is being planned.
 - Not manufacturer firmware.
 - Not certified obstacle avoidance.
 - Not a safety-critical flight controller.
-- Production hardware adapters are intentionally not included in this repository.
+- Production hardware adapters are intentionally excluded from this repository.
 
 ## 5-minute start
 
@@ -86,6 +86,8 @@ OPENAI_MISSION_MODEL=...
 ```
 
 Do **not** commit `.env.local`.
+
+The commercial version of ARIS will run on proprietary LLMs based on use case and scenarios. 
 
 ## Verify the core without launching Bullet
 
@@ -142,7 +144,8 @@ production perception, enterprise integrations, deployment tooling, and support.
 
 ARIS Open Core is intended for civilian inspection, research, documentation, and
 general autonomy experimentation. It does not include weaponization, targeting,
-or autonomous pursuit of people.
+or autonomous pursuit of people. Dual-use and military infrastructure is reserved for 
+Devoniq ARIS commercial versions.
 
 ## License
 

@@ -14,8 +14,9 @@ The public core is designed to make the architecture inspectable and hackable.
 
 **v0.2 adds a direct PX4/MAVSDK adapter**, so developers can connect ARIS to PX4/MAVLink systems without a phone app or proprietary bridge.
 
-The public core includes natural-language mission interpretation, Mission IR, safety validation,
-clean-slate object discovery, 2D/3D planning, replanning, simulation adapters, and the browser
+The public core is designed to make the architecture inspectable and hackable:
+natural-language mission interpretation, Mission IR, safety validation, clean-slate
+object discovery, 2D/3D planning, replanning, simulation adapters, and the browser
 Simulation Lab.
 
 ## What this is
@@ -31,6 +32,7 @@ Simulation Lab.
 - Not manufacturer firmware.
 - Not certified obstacle avoidance.
 - Not a safety-critical flight controller.
+- Production hardware adapters are intentionally not included in this repository.
 
 ## 5-minute start
 
@@ -69,7 +71,8 @@ See [docs/PX4_MAVSDK.md](docs/PX4_MAVSDK.md) for SITL and real-aircraft integrat
 
 ## Live natural language
 
-The simulator can run without an LLM connection, but live free-form mission interpretation requires an OpenAI API key and a configured model:
+The simulator can run without an LLM connection, but live free-form mission
+interpretation requires an OpenAI API key and a configured model:
 
 ```bash
 cp .env.example .env.local
@@ -91,6 +94,10 @@ python -m pip install -r requirements-dev.txt
 python -m tools.community_self_test
 python -m pytest
 ```
+
+The public test suite exercises Mission IR validation, safety rules, general
+natural-language schema handling, clean-slate discovery semantics, 3D planning,
+progress-aware navigation contracts, asset coverage logic, and regression checks.
 
 ## Architecture
 
@@ -116,19 +123,26 @@ World discovery / target selection
 Drone adapter interface
       |
       v
-Bullet Simulation Lab / PX4 MAVSDK
+Bullet Simulation Lab
 ```
 
-The language model interprets intent. It does **not** directly issue arbitrary motor commands.
-ARIS owns safety validation, bounded mission semantics, route generation, and execution.
+The language model interprets intent. It does **not** directly issue arbitrary
+motor commands. ARIS owns safety validation, bounded mission semantics, route
+generation, and execution.
 
 ## Open-core boundary
 
 See [OPEN_CORE_BOUNDARY.md](OPEN_CORE_BOUNDARY.md).
 
+In short, this repository contains the developer/research core. Devoniq's commercial
+layer is intended to cover production aircraft integrations, fleet/cloud operations,
+production perception, enterprise integrations, deployment tooling, and support.
+
 ## Safety scope
 
-ARIS Open Core is intended for civilian inspection, research, documentation, and general autonomy experimentation. It does not include weaponization, targeting, or autonomous pursuit of people.
+ARIS Open Core is intended for civilian inspection, research, documentation, and
+general autonomy experimentation. It does not include weaponization, targeting,
+or autonomous pursuit of people.
 
 ## License
 
@@ -136,4 +150,5 @@ Apache License 2.0. See [LICENSE](LICENSE).
 
 ## Project status
 
-Early-stage research software. Expect rapid iteration. Issues, reproducible bug reports, tests, and pull requests are welcome.
+Early-stage research software. Expect rapid iteration. Issues, reproducible bug
+reports, tests, and pull requests are welcome.

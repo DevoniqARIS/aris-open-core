@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ARIS · Simulation Lab</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<header><a class="brand" href="/">DEVONIQ <strong>ARIS</strong><span class="lab">SIMULATION LAB v1.1</span></a><div class="header-right"><span class="pill amber">SIMULATED AIRCRAFT</span><span id="connection" class="connection">CONNECTING</span></div></header>
+<main>
+<section class="heading"><div><div class="eyebrow">MISSION INTELLIGENCE / LIVE EXECUTION</div><h1>Tell ARIS what to do.</h1><p>Live RS intent interpretation. ARIS safety validation. Real Python execution against Bullet physics.</p></div><div class="engine"><span class="dot"></span> Bullet physics <small>Generic aircraft · No manufacturer firmware</small></div></section>
+<div id="auth" hidden class="auth"><b>Open the private link printed by the launcher.</b><p>It contains the session token after #token=. No account is needed.</p></div>
+<div id="error" class="error" hidden></div>
+<div class="workspace">
+<section class="stage panel">
+<div class="stage-head"><div><span class="eyebrow">WORLD VIEW</span><b id="status">READY</b></div><div class="stage-tools"><button id="resetView" class="subtle">Reset view</button><button id="record" class="subtle">● Record</button><button id="importReplay" class="subtle">Open replay</button><input id="replayFile" type="file" accept=".json" hidden></div></div>
+<div id="viewport"><div class="viewport-badge"><span class="dot"></span><span id="feedLabel">LIVE PHYSICS</span></div><div class="viewport-note">Drag to orbit · Scroll to zoom</div><div id="viewNotice" hidden></div></div>
+<div class="metrics"><div><small>SIM TIME</small><strong id="simTime">00:00</strong></div><div><small>ALTITUDE</small><strong id="altitude">0.0 <i>m</i></strong></div><div><small>BATTERY</small><strong id="battery">100 <i>%</i></strong></div><div><small id="metric4label">EVIDENCE</small><strong id="evidence">0 <i>accepted</i></strong></div><div><small>REAL-TIME FACTOR</small><strong id="rtf">1.0<i>×</i></strong></div></div>
+<div id="replayBar" hidden><button id="exitReplay" class="subtle">Back to live</button><input id="replaySeek" type="range" min="0" max="100" value="0"><span>RECORDED TELEMETRY · NOT A NEW TEST</span></div>
+<div class="surfaces"><span class="eyebrow" id="requirementsLabel">REQUIRED VIEWS</span><div id="views"></div></div>
+<div class="timeline-head"><span class="eyebrow">LIVE ARIS EXECUTION TRACE</span><span id="eventCount">0 events</span></div><div id="timeline" class="timeline"><p class="empty">Launch a mission to see the actual execution chain.</p></div>
+</section>
+<aside>
+<section class="panel controls"><div class="section-title"><h2>Mission control</h2><span class="tag">01</span></div>
+<label>MISSION MODE<select id="missionMode"><option value="adaptive_inspection">Adaptive inspection · LIVE RS + replanning</option><option value="natural_language_flight">Free-form natural-language flight · LIVE RS</option><option value="inspection">Evidence inspection</option></select></label>
+<div id="gptStatusBox" class="gpt-status"><div><span class="eyebrow">RS MISSION INTERPRETER</span><strong id="gptStatus">NOT VERIFIED</strong></div><button id="verifyGpt" class="subtle">Verify live RS</button></div>
+<p id="gptHelp" class="help">Free-form natural-language flight fails closed: if the live RS call fails, ARIS will not move the aircraft.</p>
+<label>HUMAN-LANGUAGE MISSION<textarea id="objectiveText" rows="5" maxlength="2000">Take clear pictures of all the corners of the building, avoid obstacles, then return home and land.</textarea></label>
+<div id="inspectionOptions" hidden>
+<label>TEST SCENARIO<select id="scenario"><option value="adaptive_complex">Complex site → obstacle discovery + replanning</option><option value="adaptive_changed">Complex site + changed asset → memory comparison</option><option value="occlusion">Obstructed view → reinspection</option><option value="clear">Clear building → full inspection</option><option value="blocked">Persistent obstruction → incomplete</option><option value="battery">Battery drop → safe abort</option><option value="collision">Unmapped obstacle → expose failure</option></select></label>
+<p id="scenarioHelp" class="help">A real 3D screen obstructs the north facade. ARIS can try one surveyed alternative.</p>
+<label>PERCEPTION<select id="vision"><option value="calibration">Local optical calibration · no API key</option><option value="openai" disabled>Live AI vision · server key required</option></select></label>
+<label class="check"><input id="gpt" type="checkbox"> Use RS for inspection interpretation</label>
+</div>
+<div class="actions"><button id="start" class="primary">Interpret + execute <span>↗</span></button><button id="abort" class="danger" disabled>Abort</button></div>
+</section>
+<section id="intentPanel" class="panel intent-panel"><div class="section-title"><h2>Intent → ARIS plan</h2><span class="tag">02</span></div><div id="intentState" class="intent-state">Waiting for a live mission.</div><div id="intentSteps" class="intent-steps"></div></section>
+<section class="panel sensor"><div class="section-title"><h2>Onboard camera</h2><span id="cameraStatus" class="tiny">RENDERED SENSOR</span></div><div class="camera-wrap"><img id="camera" alt="Live rendered drone camera"><span id="cameraOverlay">Awaiting frames</span></div><div class="camera-caption">Frames rendered from the aircraft’s current pose.</div></section>
+<section class="panel faults"><div class="section-title"><h2>Introduce a fault</h2><span class="tag">03</span></div><div class="fault-grid"><button data-fault="battery">Low battery</button><button data-fault="gps">GPS failure</button><button data-fault="stale">Stale telemetry</button><button data-fault="link">Link loss</button><button data-fault="wind">Wind force</button></div><p class="help">Explicit fault injection. Outcome is measured, never forced to pass.</p></section>
+</aside>
+</div>
+<section class="panel evidence-panel"><div class="section-title"><div><span class="eyebrow">AUDITABLE OUTPUT</span><h2>Evidence, commands & independent verdict</h2></div><div class="result-actions"><span id="verdict" class="pill">NO COMPLETED RUN</span><button id="export" class="subtle" disabled>Download run package ↓</button></div></div><p id="resultText" class="help">For natural-language flight the run package records the original prompt, RS structured output, ARIS-compiled commands, execution trace and resulting trajectory.</p><div id="gallery" class="gallery"><p class="empty">Inspection evidence images appear here. Free-form natural-language flight uses the command trace above.</p></div></section>
+<footer>ARIS v1.1 · RS objective → ARIS discovery/replanning/evidence/memory → Bullet simulation <span>Not a physical flight or manufacturer-firmware validation.</span></footer>
+</main>
+<dialog id="imageDialog"><button id="closeDialog" class="subtle">Close ×</button><img id="largeImage" alt="Captured inspection evidence"><p id="largeCaption"></p></dialog>
+<script type="module" src="/main.js"></script></body></html>
